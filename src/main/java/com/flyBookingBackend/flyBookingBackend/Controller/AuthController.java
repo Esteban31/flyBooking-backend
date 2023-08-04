@@ -41,7 +41,7 @@ public class AuthController {
 
             } catch (Exception e) {
                   throw new ResponseStatusException(
-                              HttpStatus.INTERNAL_SERVER_ERROR, "Su mamita hijueputa no funciona", e);
+                              HttpStatus.INTERNAL_SERVER_ERROR, "Error creating a user", e);
 
             }
       }
@@ -68,7 +68,7 @@ public class AuthController {
             } catch (Exception e) {
                   System.out.print(e);
                   throw new ResponseStatusException(
-                              HttpStatus.INTERNAL_SERVER_ERROR, "Su mamita hijueputa no funciona", e);
+                              HttpStatus.INTERNAL_SERVER_ERROR, "Error geting user by email and password", e);
             }
 
       }

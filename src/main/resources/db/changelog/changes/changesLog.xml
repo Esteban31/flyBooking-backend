@@ -35,10 +35,10 @@
             </column>
             <column name="passangers" type="INT"/>
             <column name="children" type="INT"/>
-            <column name="totalPayed" type="DECIMAL"/>
-            <column name="userId" type="BIGINT"/>
+            <column name="total_payed" type="DECIMAL"/>
+            <column name="user_id" type="BIGINT"/>
         </createTable>
-        <addForeignKeyConstraint baseColumnNames="userId"
+        <addForeignKeyConstraint baseColumnNames="user_id"
                                  baseTableName="booking"
                                  constraintName="fk_booking_user"
                                  referencedColumnNames="id"
@@ -62,15 +62,9 @@
             <column name="destiny" type="VARCHAR(60)"/>
             <column name="departure" type="DATETIME"/>
             <column name="arrive" type="DATETIME"/>
-            <column name="isDirect" type="BOOLEAN"/>
-            <column name="pricePerPassanger" type="DECIMAL"/>
-            <column name="pricerPerChildren" type="DECIMAL"/>
-            <column name="bookingId" type="BIGINT"/>
+            <column name="is_direct" type="BOOLEAN"/>
+            <column name="price_per_passanger" type="DECIMAL"/>
+            <column name="price_per_child" type="DECIMAL"/>
         </createTable>
-        <addForeignKeyConstraint baseColumnNames="bookingId"
-                                 baseTableName="flight"
-                                 constraintName="fk_booking_flight"
-                                 referencedColumnNames="id"
-                                 referencedTableName="booking"/>
     </changeSet>
 </databaseChangeLog>
