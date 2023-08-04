@@ -9,5 +9,5 @@ import com.flyBookingBackend.flyBookingBackend.Entity.BookingEntity;
 
 @Repository
 public interface BookingRepository extends JpaRepository<BookingEntity, BigInteger> {
-
+      BookingEntity findByUser_id(BigInteger userId);
 }

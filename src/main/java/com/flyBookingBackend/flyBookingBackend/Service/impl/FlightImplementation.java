@@ -1,6 +1,8 @@
 package com.flyBookingBackend.flyBookingBackend.Service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,13 +21,16 @@ public class FlightImplementation implements FlightService {
       FlightRepository flightRepository;
 
       @Override
-      public FlghtDTO getFlightByFilter(String origin, String destiny, Date departure, Date arrive) {
+      public List<FlghtDTO> getFlightByFilter(String origin, String destiny, Date departure, Date arrive) {
 
-            FlightEntity flightEntity = this.flightRepository.findByOriginAndDestinyAndDepartureAndArrive(origin, destiny, departure, arrive);
+            List<FlightEntity> flightEntityList = this.flightRepository.findByOriginOrDestinyOrDepartureOrArrive(origin,
+                        destiny, departure, arrive);
 
-            FlghtDTO flightDTO = new FlghtDTO();
+            List<FlghtDTO> flightDTOList = new ArrayList<FlghtDTO>();
 
-            if (flightEntity != null) {
+
+            for (FlightEntity flightEntity : flightEntityList) {
+                  FlghtDTO flightDTO = new FlghtDTO();
                   flightDTO.setOrigin(flightEntity.getOrigin());
                   flightDTO.setDestiny(flightEntity.getDestiny());
                   flightDTO.setDeparture(flightEntity.getDeparture());
@@ -33,9 +38,12 @@ public class FlightImplementation implements FlightService {
                   flightDTO.setIs_direct(flightEntity.getIs_direct());
                   flightDTO.setPrice_per_passanger(flightEntity.getPrice_per_passanger());
                   flightDTO.setPrice_per_child(flightEntity.getPrice_per_child());
+                  flightDTO.setId(flightEntity.getId());
+
+                  flightDTOList.add(flightDTO);
             }
 
-            return flightDTO;
+            return flightDTOList;
 
       }
 

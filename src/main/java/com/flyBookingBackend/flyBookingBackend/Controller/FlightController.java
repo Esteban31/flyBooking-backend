@@ -1,6 +1,7 @@
 package com.flyBookingBackend.flyBookingBackend.Controller;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,19 +31,15 @@ public class FlightController {
       }
 
       @PostMapping("/search")
-      public FlghtDTO getFlightByFilter(@RequestBody FlghtDTO data) {
-
-
-
+      public List<FlghtDTO> getFlightByFilter(@RequestBody FlghtDTO data) {
             String origin = data.getOrigin();
             String destiny = data.getDestiny();
             Date departure = data.getDeparture();
             Date arrive = data.getArrive();
 
             try {
-                  FlghtDTO result = this.flightService.getFlightByFilter(origin, destiny, departure, arrive);
 
-                  return result;
+                  return this.flightService.getFlightByFilter(origin, destiny, departure, arrive);
 
 
             } catch (Exception e) {

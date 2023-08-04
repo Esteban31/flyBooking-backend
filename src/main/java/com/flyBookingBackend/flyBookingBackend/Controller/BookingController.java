@@ -1,8 +1,12 @@
 package com.flyBookingBackend.flyBookingBackend.Controller;
 
+import java.math.BigInteger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.flyBookingBackend.flyBookingBackend.DTO.BookingDTO;
+import com.flyBookingBackend.flyBookingBackend.DTO.UserDTO;
 import com.flyBookingBackend.flyBookingBackend.Service.BookingService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -43,5 +48,21 @@ public class BookingController {
                               HttpStatus.INTERNAL_SERVER_ERROR, "Error creating a Booking", e);
 
             }
+      }
+
+
+      @GetMapping("/bookings/{userId}")
+      public BookingDTO getUserById(@PathVariable BigInteger userId) {
+
+            try {
+                  BookingDTO result = this.bookingService.getBookingByUserId(userId);
+
+                  return result;
+
+            } catch (Exception e) {
+                  throw new ResponseStatusException(
+                              HttpStatus.INTERNAL_SERVER_ERROR, "Error geting my bookings", e);
+            }
+
       }
 }

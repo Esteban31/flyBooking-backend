@@ -31,7 +31,6 @@ public class BookingImplementation implements BookingService {
       @Autowired
       FlightRepository flightRepository;
 
-
       @Override
       public BookingDTO createBooking(BookingDTO data) {
             BookingEntity bookingEntity = new BookingEntity();
@@ -43,12 +42,10 @@ public class BookingImplementation implements BookingService {
             UserEntity userEntity = userRepository.findById(data.getUser_id()).orElse(null);
             FlightEntity flightEntity = flightRepository.findById(data.getFlight_id()).orElse(null);
 
-
             // WE CHECK IF THE USER EXIST
             if (userEntity != null) {
                   bookingEntity.setUser(userEntity);
             }
-
 
             // WE CHECK IF THE FLIGHT EXIST
             if (flightEntity != null) {
@@ -62,6 +59,23 @@ public class BookingImplementation implements BookingService {
             bookingDTO.setPassangers(createdBookingEntity.getPassangers());
 
             return bookingDTO;
+      }
+
+      @Override
+      public BookingDTO getBookingByUserId(BigInteger userId) {
+
+            BookingEntity bookingEntity = this.bookingRepository.findByUser_id(userId);
+
+            BookingDTO bookingDTO = new BookingDTO();
+
+            if (bookingEntity != null) {
+                  bookingDTO.setPassangers(bookingEntity.getPassangers());
+                  bookingDTO.setChildren(bookingEntity.getChildren());
+                  bookingDTO.setTotal_payed(bookingEntity.getTotal_payed());
+            }
+
+            return bookingDTO;
+
       }
 
 }
