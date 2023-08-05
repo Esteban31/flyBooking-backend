@@ -1,6 +1,7 @@
 package com.flyBookingBackend.flyBookingBackend.Controller;
 
 import java.math.BigInteger;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.flyBookingBackend.flyBookingBackend.DTO.BookingDTO;
+import com.flyBookingBackend.flyBookingBackend.DTO.FlghtDTO;
 import com.flyBookingBackend.flyBookingBackend.DTO.UserDTO;
 import com.flyBookingBackend.flyBookingBackend.Service.BookingService;
 
@@ -52,12 +54,11 @@ public class BookingController {
 
 
       @GetMapping("/bookings/{userId}")
-      public BookingDTO getUserById(@PathVariable BigInteger userId) {
+      public List<FlghtDTO> getUserById(@PathVariable BigInteger userId) {
 
             try {
-                  BookingDTO result = this.bookingService.getBookingByUserId(userId);
 
-                  return result;
+                  return this.bookingService.getBookingByUserId(userId);
 
             } catch (Exception e) {
                   throw new ResponseStatusException(

@@ -1,12 +1,15 @@
 package com.flyBookingBackend.flyBookingBackend.Service.impl;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.flyBookingBackend.flyBookingBackend.DTO.BookingDTO;
+import com.flyBookingBackend.flyBookingBackend.DTO.FlghtDTO;
 import com.flyBookingBackend.flyBookingBackend.DTO.UserDTO;
 import com.flyBookingBackend.flyBookingBackend.Entity.BookingEntity;
 import com.flyBookingBackend.flyBookingBackend.Entity.FlightEntity;
@@ -62,20 +65,47 @@ public class BookingImplementation implements BookingService {
       }
 
       @Override
-      public BookingDTO getBookingByUserId(BigInteger userId) {
+      public List<FlghtDTO> getBookingByUserId(BigInteger userId) {
+            List<BookingEntity> bookingEntityList = this.bookingRepository.findByUser_id(userId);
 
-            BookingEntity bookingEntity = this.bookingRepository.findByUser_id(userId);
+            List<FlghtDTO> flightDTOList = new ArrayList<>();
 
-            BookingDTO bookingDTO = new BookingDTO();
-
-            if (bookingEntity != null) {
-                  bookingDTO.setPassangers(bookingEntity.getPassangers());
+            for (BookingEntity bookingEntity : bookingEntityList) {
+                  BookingDTO bookingDTO = new BookingDTO();
                   bookingDTO.setChildren(bookingEntity.getChildren());
-                  bookingDTO.setTotal_payed(bookingEntity.getTotal_payed());
+
+                  FlightEntity flightEntity = bookingEntity.getFlight();
+                  if (flightEntity != null) {
+                        BigInteger flightId = flightEntity.getId();
+                        bookingDTO.setFlight_id(flightId);
+
+                        // Get all info about the flight
+                        Optional<FlightEntity> flightEntityOptional = this.flightRepository.findById(flightId);
+
+                        if (flightEntityOptional.isPresent()) {
+
+            
+                              FlghtDTO flightDTO = new FlghtDTO();
+                              flightDTO.setArrive(flightEntity.getArrive());
+                              flightDTO.setOrigin(flightEntity.getOrigin());
+                              flightDTO.setDestiny(flightEntity.getDestiny());
+                              flightDTO.setDeparture(flightEntity.getDeparture());
+                              flightDTO.setArrive(flightEntity.getArrive());
+                              flightDTO.setIs_direct(flightEntity.getIs_direct());
+                              flightDTO.setPrice_per_passanger(flightEntity.getPrice_per_passanger());
+                              flightDTO.setPrice_per_child(flightEntity.getPrice_per_child());
+                              flightDTO.setId(flightEntity.getId());
+
+                              flightDTOList.add(flightDTO);
+            
+                        } else {
+                              return null;
+                        }
+                  }
+
             }
 
-            return bookingDTO;
-
+            return flightDTOList;
       }
 
 }
