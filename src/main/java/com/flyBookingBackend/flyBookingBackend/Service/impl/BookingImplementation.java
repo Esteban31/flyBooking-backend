@@ -84,7 +84,7 @@ public class BookingImplementation implements BookingService {
 
                         if (flightEntityOptional.isPresent()) {
 
-            
+
                               FlghtDTO flightDTO = new FlghtDTO();
                               flightDTO.setArrive(flightEntity.getArrive());
                               flightDTO.setOrigin(flightEntity.getOrigin());
@@ -97,7 +97,7 @@ public class BookingImplementation implements BookingService {
                               flightDTO.setId(flightEntity.getId());
 
                               flightDTOList.add(flightDTO);
-            
+
                         } else {
                               return null;
                         }
@@ -106,6 +106,20 @@ public class BookingImplementation implements BookingService {
             }
 
             return flightDTOList;
+      }
+
+      @Override
+      public BookingDTO deleteBooking(BigInteger bookingId) {
+            BookingEntity bookingEntity = new BookingEntity();
+            Optional<BookingEntity> optionalBooking = this.bookingRepository.findById(bookingId);
+            BookingDTO bookingDTO = new BookingDTO();
+            if (optionalBooking.isPresent()) {
+                  bookingEntity = optionalBooking.get();
+                  bookingEntity.setId(bookingId);
+                  this.bookingRepository.deleteById(bookingId);
+                  bookingDTO.setId(bookingId);
+            }
+            return bookingDTO;
       }
 
 }

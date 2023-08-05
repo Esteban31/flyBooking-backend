@@ -2,6 +2,7 @@ package com.flyBookingBackend.flyBookingBackend.DTO;
 
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.Optional;
 
 import lombok.Data;
 
@@ -15,5 +16,4 @@ public class FlghtDTO {
       private Boolean is_direct;
       private Integer price_per_passanger;
       private Integer price_per_child;
-      
 }

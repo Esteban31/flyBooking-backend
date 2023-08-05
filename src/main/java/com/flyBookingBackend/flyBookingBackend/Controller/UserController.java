@@ -38,7 +38,7 @@ public class UserController {
 
             } catch (Exception e) {
                   throw new ResponseStatusException(
-                              HttpStatus.INTERNAL_SERVER_ERROR, "Su mamita hijueputa no funciona", e);
+                              HttpStatus.INTERNAL_SERVER_ERROR, "Error geting user info", e);
             }
 
       }

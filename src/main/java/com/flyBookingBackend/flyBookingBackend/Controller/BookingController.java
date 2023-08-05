@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -65,5 +66,15 @@ public class BookingController {
                               HttpStatus.INTERNAL_SERVER_ERROR, "Error geting my bookings", e);
             }
 
+      }
+
+      @DeleteMapping("/{id}")
+      public BookingDTO deleteBooking(@PathVariable BigInteger id) {
+            try {
+                  return this.bookingService.deleteBooking(id);
+            } catch (Exception e) {
+                  throw new ResponseStatusException(
+                              HttpStatus.INTERNAL_SERVER_ERROR, "Error deleting the book", e);
+            }
       }
 }

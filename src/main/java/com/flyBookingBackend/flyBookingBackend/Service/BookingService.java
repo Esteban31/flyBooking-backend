@@ -10,7 +10,10 @@ import com.flyBookingBackend.flyBookingBackend.DTO.FlghtDTO;
 public interface BookingService {
       
       BookingDTO createBooking(BookingDTO data);
+
       List<FlghtDTO> getBookingByUserId(BigInteger userId);
+      
+      BookingDTO deleteBooking(BigInteger bookingId);
 
 
 }
